@@ -7,6 +7,9 @@ var port = 8000;
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+   extended: false 
+}));
 
 var comments = 
     [
@@ -25,13 +28,20 @@ var comments =
     ];
 
 
-app.post('api/comments', function(req, res){
-    console.log(req.body);
-});
+var router = express.Router();
 
-app.get('/api/comments', function(req, res){
-    res.send(comments);
-});
+router.route('/comments')
+    .post(function(req, res){
+        comments.push(req.body);
+        res.send(201);
+    })
+    .get(function(req, res){
+        res.send(comments);
+    });
+
+app.use('/api', router);
+
+
 
 app.use('/', express.static(__dirname + '/public'));
 

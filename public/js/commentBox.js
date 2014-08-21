@@ -6,7 +6,7 @@ var marked = require('marked');
 
 
 
-var CommentBox = React.createClass({
+module.exports = React.createClass({
     loadCommentsFromServer: function(){
         $.ajax({
           url: this.props.url,
@@ -109,10 +109,3 @@ var Comment = React.createClass({
         );
     }
 });
-
-
-
-React.renderComponent(
-    <CommentBox url="api/comments" pollInterval={8000} />,
-    document.getElementById('content')
-);

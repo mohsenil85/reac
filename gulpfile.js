@@ -25,7 +25,7 @@ gulp.task('clean', function(){
 });
 
 gulp.task('js', function(){
-    browserify('./public/js/commentBox.js')
+    browserify('./public/js/app.js')
     .transform(reactify)
     .bundle()
     .pipe(source('bundle.js'))

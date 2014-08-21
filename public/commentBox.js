@@ -1,5 +1,11 @@
 /** @jsx React.DOM */
 
+var $ = require('jquery');
+var React = require('react');
+var marked = require('marked');
+
+
+
 var CommentBox = React.createClass({
     loadCommentsFromServer: function(){
         $.ajax({
@@ -90,10 +96,9 @@ var CommentList = React.createClass({
     }
 });
 
-var converter = new Showdown.converter();
 var Comment = React.createClass({
     render: function(){
-        var rawMarkup = converter.makeHtml(this.props.children.toString());
+        var rawMarkup = marked(this.props.children.toString());
         return (
             <div className="comment">
               <h2 className="commentAuthor">

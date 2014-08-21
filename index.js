@@ -1,13 +1,38 @@
 var express = require('express');
 var logger = require('morgan');
+var bodyParser = require('body-parser');
 
 var app = express();
 var port = 8000;
 
 app.use(logger('dev'));
+app.use(bodyParser.json());
 
-app.get('/', function(req, res){
-  res.send(200);
+var comments = 
+    [
+        {
+          "author": "Bob Frankelstien",
+          "text": "I am *pretty* cool"
+        },
+        {
+          "author": "Foof Beaninstien",
+          "text": "I am `rather droll`"
+        },
+        {
+          "author": "Frank Bobelstien",
+          "text": "I am extraordinarily **awesome**"
+        }
+    ];
+
+
+app.post('api/comments', function(req, res){
+    console.log(req.body);
 });
+
+app.get('/api/comments', function(req, res){
+    res.send(comments);
+});
+
+app.use('/', express.static(__dirname + '/public'));
 
 app.listen(port);

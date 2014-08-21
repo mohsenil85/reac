@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mohsenil85/reac",
   "dependencies": {
+    "body-parser": "^1.6.5",
     "express": "^4.8.5",
     "morgan": "^1.2.3"
   }

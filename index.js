@@ -33,7 +33,7 @@ var router = express.Router();
 router.route('/comments')
     .post(function(req, res){
         comments.push(req.body);
-        res.send(201);
+        res.status(201).end();
     })
     .get(function(req, res){
         res.send(comments);

@@ -57,7 +57,6 @@ var CommentForm = React.createClass({
         if (!author || !text){
             return false;
         }
-        console.log(this);
         this.props.onCommentSubmit({author: author, text: text})
         this.refs.author.getDOMNode().value = '';
         this.refs.text.getDOMNode().value = '';
@@ -109,6 +108,6 @@ var Comment = React.createClass({
 
 
 React.renderComponent(
-    <CommentBox url="comments.json" pollInterval={8000} />,
+    <CommentBox url="api/comments" pollInterval={8000} />,
     document.getElementById('content')
 );

@@ -1,0 +1,23 @@
+{
+  "name": "reac",
+  "version": "0.0.0",
+  "description": "reac tut",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohsenil85/reac.git"
+  },
+  "author": "mohsenil85",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mohsenil85/reac/issues"
+  },
+  "homepage": "https://github.com/mohsenil85/reac",
+  "dependencies": {
+    "express": "^4.8.5",
+    "morgan": "^1.2.3"
+  }
+}

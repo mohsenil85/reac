@@ -33,7 +33,8 @@ var router = express.Router();
 router.route('/comments')
     .post(function(req, res){
         comments.push(req.body);
-        res.status(201).end();
+        res.status(201);
+        res.send({"message": "user created"});
     })
     .get(function(req, res){
         res.send(comments);

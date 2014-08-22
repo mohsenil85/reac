@@ -8,6 +8,6 @@ var CommentBox = require('./commentBox.js');
 
 
 React.renderComponent(
-    <CommentBox url="api/comments" pollInterval={8000} />,
+    <CommentBox url="api/comments" pollInterval={5000} />,
     document.getElementById('content')
 );

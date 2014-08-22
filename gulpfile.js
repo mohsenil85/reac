@@ -10,15 +10,15 @@ var rimraf = require("gulp-rimraf");
 
 var buffer = require('vinyl-buffer');
 
-var public = './public'
+var public = './public';
 var scriptsDir = './public/js';
 var buildDir = './target';
 
 gulp.task('index', function(){
     return gulp.src('./public/index.html')
-    .pipe(gulp.dest('./target'))
+    .pipe(gulp.dest('./target'));
+});
 
-})
 gulp.task('clean', function(){
     return gulp.src(buildDir, {read: false})
     .pipe(rimraf());
@@ -30,8 +30,8 @@ gulp.task('js', function(){
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(uglify())
-    .pipe(gulp.dest('./target'))
+//    .pipe(uglify())
+    .pipe(gulp.dest('./target'));
 });
 gulp.task('default', [
     'clean',

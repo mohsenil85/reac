@@ -2,8 +2,9 @@
 
 var $ = require('jquery');
 var React = require('react');
-var marked = require('marked');
 
+var CommentList  = require('./commentList');
+var CommentForm = require('./commentForm.js');
 
 
 module.exports = React.createClass({
@@ -50,65 +51,6 @@ module.exports = React.createClass({
       <h1>Comments</h1>
       <CommentList data={this.state.data} />
       <CommentForm onCommentSubmit={this.handleCommentSubmit} />
-      </div>
-    );
-  }
-});
-
-var CommentForm = React.createClass({
-  handleSubmit: function(){
-    var author = this.refs.author.getDOMNode().value.trim();
-    var text = this.refs.text.getDOMNode().value.trim();
-    if (!author || !text){
-      return false;
-    }
-    this.props.onCommentSubmit({author: author, text: text})
-    this.refs.author.getDOMNode().value = '';
-    this.refs.text.getDOMNode().value = '';
-    return false;
-  },
-  render: function(){
-    return (
-      <form className="commentForm" onSubmit={this.handleSubmit}>
-      <input type="text" placeholder="Your Name" ref="author"/>
-      <textarea rows="4" cols="30" placeholder="Your Comment..." ref="text"/>
-      <input type="submit" value="Post"/>
-      </form>
-    );
-  }
-});
-
-var CommentList = React.createClass({
-  render: function(){
-      var commentNodes = $.map(this.props.data, function(comment, index){
-        return (
-          <Comment key={index}  author={comment.author}>
-          {comment.text}
-          </Comment>
-        );
-      });
-    return (
-      <div className="commentList">
-      {commentNodes}
-      </div>
-    );
-  }
-});
-
-var Comment = React.createClass({
-  render: function(){
-    var rawMarkup = "";
-    try {
-      rawMarkup = marked(this.props.children.toString());
-    } catch (err){
-      console.log("err");
-    }
-    return (
-      <div className="comment">
-      <h2 className="commentAuthor">
-      { this.props.author }
-      </h2>
-      <span dangerouslySetInnerHTML={{ __html: rawMarkup }} />
       </div>
     );
   }

@@ -32,9 +32,10 @@
     "gulp-notify": "^1.5.0",
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
+    "gulp-watchify": "^0.2.0",
     "reactify": "^0.14.0",
     "vinyl-buffer": "0.0.0",
     "vinyl-source-stream": "^0.1.1",
-    "watchify": "^1.0.2"
+    "watchify": "^0.6.4"
   }
 }

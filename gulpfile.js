@@ -3,7 +3,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var browserify = require('browserify');
 var reactify = require('reactify');
-var watchify = require('watchify');
+var watchify = require('gulp-watchify');
 var notify = require("gulp-notify");
 var uglify = require("gulp-uglify");
 var rimraf = require("gulp-rimraf");
@@ -33,6 +33,15 @@ gulp.task('js', function(){
 //    .pipe(uglify())
     .pipe(gulp.dest('./target'));
 });
+
+gulp.task('watch', function(){
+  browserify('./public/js/app.js')
+  .transform(reactify)
+  .bundle()
+  .pipe(source('bundle.js'))
+  .pipe(gulp.dest('./target'));
+});
+
 gulp.task('default', [
     'clean',
     'index',

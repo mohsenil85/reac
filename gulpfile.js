@@ -45,10 +45,11 @@ gulp.task('browserify', watchify(function(watchify) {
 
 gulp.task('watchify', ['enable-watch-mode', 'browserify']);
 
-gulp.task('watch', ['watchify', 'index'], function () {
+gulp.task('watch', ['browserify', 'index'], function () {
   nodemon({
     script: 'index.js'
-  });
+  })
+  .on('restart', [ 'browserify', 'index']);
 });
 
 gulp.task('compile', ['js-min', 'index',]);

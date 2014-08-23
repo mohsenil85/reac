@@ -1,49 +1,54 @@
-var source = require('vinyl-source-stream');
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+var watchify = require('gulp-watchify');
 var browserify = require('browserify');
 var reactify = require('reactify');
-var watchify = require('gulp-watchify');
-var notify = require("gulp-notify");
+var source = require('vinyl-source-stream');
 var uglify = require("gulp-uglify");
-var rimraf = require("gulp-rimraf");
-
+var nodemon = require("gulp-nodemon");
 var buffer = require('vinyl-buffer');
 
-var public = './public';
-var scriptsDir = './public/js';
-var buildDir = './target';
+var bundlePaths = {
+  js: [
+    './public/js/**/*.js'
+  ],
+  jsMain: './public/js/app.js',
+  index: './public/index.html',
+  dest:'./target'
+};
 
-gulp.task('index', function(){
-    return gulp.src('./public/index.html')
-    .pipe(gulp.dest('./target'));
-});
+var watching = false;
+gulp.task('enable-watch-mode', function() { watching = true; });
 
-gulp.task('clean', function(){
-    return gulp.src(buildDir, {read: false})
-    .pipe(rimraf());
-});
-
-gulp.task('js', function(){
-    browserify('./public/js/app.js')
+gulp.task('js-min', function(){
+    browserify(bundlePaths.jsMain)
     .transform(reactify)
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(buffer())
-//    .pipe(uglify())
+    .pipe(uglify())
     .pipe(gulp.dest('./target'));
 });
 
-gulp.task('watch', function(){
-  browserify('./public/js/app.js')
-  .transform(reactify)
-  .bundle()
-  .pipe(source('bundle.js'))
-  .pipe(gulp.dest('./target'));
+
+gulp.task('index', function(){
+    return gulp.src(bundlePaths.index)
+    .pipe(gulp.dest('./target'));
 });
 
-gulp.task('default', [
-    'clean',
-    'index',
-    'js'
-]);
+gulp.task('browserify', watchify(function(watchify) {
+  return gulp.src(bundlePaths.js)
+  .pipe(watchify({
+    watch:watching
+  }))
+  .pipe(gulp.dest(bundlePaths.dest));
+}));
+
+gulp.task('watchify', ['enable-watch-mode', 'browserify']);
+
+gulp.task('watch', ['watchify', 'index'], function () {
+  nodemon({
+    script: 'index.js'
+  });
+});
+
+gulp.task('compile', ['js-min', 'index',]);

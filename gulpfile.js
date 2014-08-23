@@ -23,9 +23,18 @@ gulp.task('js-min', function(){
     browserify(bundlePaths.jsMain)
     .transform(reactify)
     .bundle()
-    .pipe(source('bundle.js'))
+    .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(uglify())
+    .pipe(gulp.dest('./target'));
+});
+
+gulp.task('js', function(){
+    browserify(bundlePaths.jsMain)
+    .transform(reactify)
+    .bundle()
+    .pipe(source('app.js'))
+    .pipe(buffer())
     .pipe(gulp.dest('./target'));
 });
 
@@ -45,11 +54,13 @@ gulp.task('browserify', watchify(function(watchify) {
 
 gulp.task('watchify', ['enable-watch-mode', 'browserify']);
 
-gulp.task('watch', ['browserify', 'index'], function () {
+gulp.task('watch', ['js', 'index'], function () {
   nodemon({
-    script: 'index.js'
+    script: 'index.js',
+    ignore: ['./target/**'], 
+    watch: ['./public/**']
   })
-  .on('restart', [ 'browserify', 'index']);
+  .on('restart', 'js');
 });
 
 gulp.task('compile', ['js-min', 'index',]);
